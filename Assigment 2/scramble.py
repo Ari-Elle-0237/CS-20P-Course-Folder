@@ -28,20 +28,24 @@ def scramble_words(string):
     words = re.findall(r"[\w']+", string)
     substitutions = []
     for word in words:
+        # Alternate phrasing for the if statement below with less indentation but uses 'continue'
+        # (Personally I find this cleaner but style guide for the class prohibits this)
+        # if len(word) == 1:
+        #     continue
+        
         # Skip words with length one as attempting to scramble them will add characters
-        if len(word) == 1:
-            continue
-        # Save the beginning and end
-        first, last = word[0], word[-1]
-        # And then scramble the middle
-        middle = word[1:-1]
+        if len(word) != 1:
+            # Save the beginning and end
+            first, last = word[0], word[-1]
+            # And then scramble the middle
+            middle = word[1:-1]
 
-        # TODO: Replace this with a fisher-yates shuffle (found in /PythonExamples/shuffle.py)
-        # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
-        middle = ''.join(random.sample(middle, len(middle)))
+            # TODO: Replace this line with a fisher-yates shuffle (found in /PythonExamples/shuffle.py)
+            # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
+            middle = ''.join(random.sample(middle, len(middle)))
 
-        # Then save it for later
-        substitutions.append((first + middle + last, word))
+            # Then save it for later
+            substitutions.append((first + middle + last, word))
     # Then once all words are scrambled, replace the words in the original string with
     # their scrambled versions
     # TODO: Fix this replacing all duplicate words with their scrambled versions

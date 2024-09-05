@@ -1,0 +1,5 @@
+To do:
+- Make Github repository use an ssh key instead of being public
+    - Learn how ssh Keys work
+- Figure out how to fetch on Pengo instead of just cloning.
+- Make Pengo auto fetch from GH
