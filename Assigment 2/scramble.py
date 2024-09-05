@@ -23,6 +23,7 @@ def scramble_word(string):
         first, last = word[0], word[-1]
         middle = word[1:-1]
 
+        # TODO: Replace this with a fisher-yates shuffle (found in /PythonExamples/)
         # This line is from:
         # https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python
         middle = ''.join(random.sample(middle, len(middle)))
