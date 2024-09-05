@@ -32,7 +32,7 @@ def scramble_words(string):
         # (Personally I find this cleaner but style guide for the class prohibits this)
         # if len(word) == 1:
         #     continue
-        
+
         # Skip words with length one as attempting to scramble them will add characters
         if len(word) != 1:
             # Save the beginning and end
