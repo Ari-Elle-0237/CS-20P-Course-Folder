@@ -5,7 +5,6 @@ loan.py
 by Ariel Zepezauer
 """
 
-djskhdsk
 def main():
     print(f"Aríel Zepezauer, arielzepezauer@gmail.com\n"
           f"Due: Thu Sep 5, 2024 7:00pm, "
