@@ -7,6 +7,7 @@ by Ariel Zepezauer
 import re
 import random
 
+
 def main():
     print(f"Aríel Zepezauer, arielzepezauer@gmail.com\n"
           f"Due: Thu Sep 9, 2024 7:00pm, "
@@ -44,12 +45,13 @@ def scramble_words(string):
     # Then once all words are scrambled, replace the words in the original string with
     # their scrambled versions
     # TODO: Fix this replacing all duplicate words with their scrambled versions
-    # (Perhaps re.sub is no the appropriate function for this,
+    # (Perhaps re.sub is not the appropriate function for this,
     # and instead saving the locations of each word would be better.
     # research how re.Match objects work, and see if they capture this date)
     for substitution in substitutions:
         string = re.sub(substitution[1],substitution[0], string)
     return string
+
 
 if __name__ == "__main__":
     main()
