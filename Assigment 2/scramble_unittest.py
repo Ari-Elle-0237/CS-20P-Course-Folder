@@ -8,6 +8,7 @@ The rest can be a total mess and you can still read it without a problem. This i
 do not read every letter by itself but the word as a whole and the brain figures it out 
 anyway.
 """
+
 class MyTestCase(unittest.TestCase):
     def test_something(self):
         self.assertEqual(True, False)
