@@ -3,8 +3,6 @@
 Assignment #1: Loan Payment Calculator
 loan.py
 by Ariel Zepezauer
-
-Test test test test
 """
 
 def main():
