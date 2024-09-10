@@ -58,6 +58,7 @@ def scramble_words(string):
     # (Perhaps re.sub is not the appropriate function for this,
     # and instead saving the locations of each word would be better.
     # research how re.Match objects work, and see if they capture this date)
+    # It seems they do, need to refactor this to use Match.pos and Match.endpos
     for substitution in substitutions:
         string = re.sub(substitution[1],substitution[0], string)
     return string
