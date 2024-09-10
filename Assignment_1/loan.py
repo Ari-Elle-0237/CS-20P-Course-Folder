@@ -2,15 +2,16 @@
 """
 Assignment #1: Loan Payment Calculator
 loan.py
-by Ariel Zepezauer
-Exit Code: 0
+by Ariel Zepezauer (arielzepezauer@gmail.com
+Pengo: 'azepezau'
 Test Cases in loan_unittest.py
 """
 
 def main():
     print(f"Aríel Zepezauer, arielzepezauer@gmail.com\n"
           f"Due: Thu Sep 5, 2024 7:00pm, "
-          f"Assignment #1: Program One (Loan Payment Calculator)")
+          f"Assignment #1: Program One (Loan Payment Calculator)\n"
+          f"Exit Code: 0, Passes all test cases (see loan_unittest.py)")
     payment = calculate_payment(*prompt_user())
     print(f"each payment:${payment:0.2f}")
 
