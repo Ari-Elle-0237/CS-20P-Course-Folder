@@ -1,9 +1,13 @@
 #! /usr/bin/python3
 """
 Assignment #2: Word Scrambler
-loan.py
-by Ariel Zepezauer
+scramble.py
+by Ariel Zepezauer (arielzepezauer@gmail.com
+Pengo: 'azepezau'
+Test Cases in scramble_unittest.py
+Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 """
+
 import re
 import random
 
@@ -11,7 +15,8 @@ import random
 def main():
     print(f"Aríel Zepezauer, arielzepezauer@gmail.com\n"
           f"Due: Thu Sep 9, 2024 7:00pm, "
-          f"Assignment #2: Program Two (Word Scrambler)")
+          f"Assignment #2: Program Two (Word Scrambler)\n"
+          f"Exit Code 0: passes most test cases but still has bugs")
     # TODO make this accept EOF and explicitly use stdin (see example in /PythonExample/findMax.py/)
     ui = input("Scramble A String:")
     print(scramble_words(ui))
@@ -28,11 +33,12 @@ def scramble_words(string):
     words = re.findall(r"[\w']+", string)
     substitutions = []
     for word in words:
+        # <editor-fold>
         # Alternate phrasing for the if statement below with less indentation but uses 'continue'
         # (Personally I find this cleaner but style guide for the class prohibits this)
         # if len(word) == 1:
         #     continue
-
+        # </editor-fold>
         # Skip words with length one as attempting to scramble them will add characters
         if len(word) != 1:
             # Save the beginning and end
