@@ -45,11 +45,7 @@ def scramble_words(string):
             first, last = word[0], word[-1]
             # And then scramble the middle
             middle = word[1:-1]
-
-            # TODO: Replace this line with a fisher-yates shuffle (found in /PythonExamples/shuffle.py)
-            # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
-            middle = ''.join(random.sample(middle, len(middle)))
-
+            middle = shuffle(middle)
             # Then save it for later
             substitutions.append((word, first + middle + last))
     # Then once all words are scrambled,
@@ -60,6 +56,10 @@ def scramble_words(string):
         string = re.sub(*substitution, string, count=1)
     return string
 
+def shuffle(iterable):
+    # TODO: Replace this line with a fisher-yates shuffle (found in /PythonExamples/shuffle.py)
+    # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
+    return ''.join(random.sample(iterable, len(iterable)))
 
 if __name__ == "__main__":
     main()
