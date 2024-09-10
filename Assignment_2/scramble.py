@@ -51,16 +51,13 @@ def scramble_words(string):
             middle = ''.join(random.sample(middle, len(middle)))
 
             # Then save it for later
-            substitutions.append((first + middle + last, word))
-    # Then once all words are scrambled, replace the words in the original string with
-    # their scrambled versions
-    # TODO: Fix this replacing all duplicate words with the first scramble
-    # (Perhaps re.sub is not the appropriate function for this,
-    # and instead saving the locations of each word would be better.
-    # research how re.Match objects work, and see if they capture this date)
-    # It seems they do, need to refactor this to use Match.pos and Match.endpos
+            substitutions.append((word, first + middle + last))
+    # Then once all words are scrambled,
+    # Replace the words in the original string with their scrambled versions
+    # (re.sub is probably not the appropriate function for this,
+    # should refactor this to use Match.pos and Match.endpos later)
     for substitution in substitutions:
-        string = re.sub(substitution[1],substitution[0], string)
+        string = re.sub(*substitution, string, count=1)
     return string
 
 
