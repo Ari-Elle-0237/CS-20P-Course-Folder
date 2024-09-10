@@ -32,9 +32,9 @@ def prompt_user():
     the number of payments to be made each year, and the number of years the money
     is to be borrowed (in that order, one per line).
     """
-    print(f"Input Amount to be Borrowed (In dollars):")
+    print(f"Input Amount to be Borrowed (Input as a number, ie: for $10 input 10):")
     principal = float(input())
-    print(f"Input Annual Interest Rate (Input as a number):")
+    print(f"Input Annual Interest Rate (Input as a number, ie: for 10% input 0.1):")
     annual_interest = float(input())
     print(f"Input Number of Payments per year:")
     annual_payments = float(input())
