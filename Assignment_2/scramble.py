@@ -17,12 +17,14 @@ import sys
 
 def main():
     print("Enter text, EOF to quit:")
+    sys.stdout = scramble_words(read_stdin())
+
+def read_stdin():
     user_input = ''
     for line in sys.stdin:
-        if line.strip() != "EOF":
-            user_input += line
-    print(scramble_words(user_input))
-
+        if line.strip() == "EOF":
+            return user_input
+        user_input += line
 
 def scramble_words(string):
     """
