@@ -12,13 +12,15 @@ Exit Code 0: passes current test cases but may still contain bugs, also shuffle(
 
 import re
 import random
+import sys
 
 
 def main():
-
-    # TODO make this accept EOF and explicitly use stdin (see example in /PythonExample/findMax.py/)
-    ui = input("Scramble A String:")
-    print(scramble_words(ui))
+    print("Enter text, EOF to quit:")
+    user_input = ''
+    for line in sys.stdin:
+        user_input += line
+    print(scramble_words(user_input))
 
 
 def scramble_words(string):
@@ -30,7 +32,7 @@ def scramble_words(string):
     """
     # Regex to compile a list of all re.Match objects for all words in the string,
     # (Explanation: Words must begin with at least one word character,
-    # then any  internal punctuation may also match as long as it's followed by another word character)
+    # then any internal punctuation may also match as long as it's followed by another word character)
     words = re.finditer(r"[\w]+(?:[-']+[\w]+)*", string)
     for match in words:
         # Get the string from the re.Match object
@@ -58,7 +60,7 @@ def scramble_words(string):
 
 def shuffle(iterable):
     """
-    Shuffles an iterable using the fisher-yates algorithm described in class
+    Shuffles an iterable using the Fisher-Yates algorithm described in class
     :param iterable: to be shuffled
     :return: scrambled list of values in the shuffled iterable
     """
@@ -70,7 +72,7 @@ def shuffle(iterable):
         shuffle_index += 1
     return iterable
 
-
+# Extends shuffle() to make it return a string instead of a list
 def shuffle_string(string):
     return "".join(shuffle(string))
     # <editor-fold: Alternate Phrasing>
