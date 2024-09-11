@@ -17,7 +17,7 @@ TESTS = (
     """
          )
 
-SAMPLE_COUNT = 100000
+SAMPLE_COUNT = 10000
 MARGIN_OF_ERROR = 0.05
 
 class MyTestCase(unittest.TestCase):

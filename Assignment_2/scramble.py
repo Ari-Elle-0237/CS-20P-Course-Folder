@@ -28,33 +28,30 @@ def scramble_words(string):
     :param string: to be scrambled
     :return: scrambled string
     """
-    # Regex to compile a list of all words in the string, apostrophes are also included to allow for contractions
-    # (May be better to use \b\B in the expression instead, test and refactor later)
-    words = re.findall(r"[\w']+", string)
-    substitutions = []
-    for word in words:
+    # Regex to compile a list of all re.Match objects for all words in the string,
+    # (Explanation: Words must begin with at least one word character,
+    # then any  internal punctuation may also match as long as it's followed by another word character)
+    words = re.finditer(r"[\w]+(?:[-']+[\w]+)*", string)
+    for match in words:
+        # Get the string from the re.Match object (ns if it's better style to use match.group() or match[0] here)
+        word = match.group()
+        # Only proceed if the string is longer than 1 to avoid problems.
         # <editor-fold: Alternate phrasing>
-        # Alternate phrasing for the if statement below with less indentation but uses 'continue'
+        # Alternate phrasing for the if statement below with less indentation but use of 'continue'
         # (Personally I find this cleaner but style guide for the class prohibits this)
         # if len(word) == 1:
         #     continue
         # </editor-fold>
-        # Skip words with length one as attempting to scramble them will cause problems
-        if len(word) != 1:
+        if len(word) > 1:
             # Save the beginning and end
             first, last = word[0], word[-1]
-            # And then scramble the middle
+            # Scramble the middle
             middle = word[1:-1]
             middle = shuffle_string(middle)
-            # Then save it for later
-            substitutions.append((word, first + middle + last))
-    # Then once all words are scrambled,
-    # Replace the words in the original string with their scrambled versions
-    # (re.sub is probably not the appropriate function for this,
-    # should refactor this to use Match.pos and Match.endpos later)
-    for substitution in substitutions:
-        string = re.sub(*substitution, string, count=1)
+            # Then update the string
+            string = string[:match.start()] + first + middle + last + string[match.end():]
     return string
+
 
 def shuffle(iterable):
     """
@@ -69,15 +66,15 @@ def shuffle(iterable):
         iterable[shuffle_index], iterable[target_index] = iterable[target_index], iterable[shuffle_index]
         shuffle_index += 1
     return iterable
-    # <editor-fold: Alternate Phrasing>
-    # # Alternate 1 line phrasing for personal future reference
-    # # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
-    # return ''.join(random.sample(iterable, len(iterable)))
-    # </editor-fold>
 
 
 def shuffle_string(string):
     return "".join(shuffle(string))
+    # <editor-fold: Alternate Phrasing>
+    # # Alternate 1 line phrasing for personal future reference
+    # # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
+    # return ''.join(random.sample(string, len(string)))
+    # </editor-fold>
 
 
 if __name__ == "__main__":
