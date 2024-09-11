@@ -17,7 +17,7 @@ import sys
 
 def main():
     print("Enter text, EOF to quit:")
-    sys.stdout.write(scramble_words(read_stdin()))
+    sys.stdout.writelines(scramble_words(read_stdin()))
 
 def read_stdin():
     user_input = ''
