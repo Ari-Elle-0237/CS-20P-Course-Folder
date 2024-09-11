@@ -6,8 +6,8 @@ by Ariel Zepezauer (arielzepezauer@gmail.com
 Pengo: 'azepezau'
 Test Cases in scramble_unittest.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
-Due:
-Exit Code 0: passes current test cases but may still contain bugs, also shuffle() needs to be implemented
+Due: Thu Sep 19, 2024 7:00pm
+Exit Code 0: Passes current test cases and visual inspection
 """
 
 import re
@@ -19,7 +19,8 @@ def main():
     print("Enter text, EOF to quit:")
     user_input = ''
     for line in sys.stdin:
-        user_input += line
+        if line != "EOF":
+            user_input += line
     print(scramble_words(user_input))
 
 
