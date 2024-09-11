@@ -14,11 +14,15 @@ TESTS = (
     """,
     """
     This is a sentence with words that repeat: Words Words Words Words Words Words Words
+    """,
+    """
+    This is a sentence with, hy-phen-ation/dashes-
     """
          )
 
 SAMPLE_COUNT = 10000
 MARGIN_OF_ERROR = 0.05
+
 
 class MyTestCase(unittest.TestCase):
     def test_manual(self):
@@ -26,6 +30,7 @@ class MyTestCase(unittest.TestCase):
         for test in TESTS:
             print(f"Scrambling:\n{test}")
             print(f"Got:\n{scramble.scramble_words(test)}")
+
     def test_shuffle_distribution (self):
         """
         Verify that shuffle() produces a uniform distribution
