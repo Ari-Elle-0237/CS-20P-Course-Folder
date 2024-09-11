@@ -22,7 +22,7 @@ def main():
 
 def read_stdin():
     user_input = ''
-    for line in sys.stdin.read():
+    for line in sys.stdin:
         if line.strip() == "EOF":
             return user_input
         user_input += line
