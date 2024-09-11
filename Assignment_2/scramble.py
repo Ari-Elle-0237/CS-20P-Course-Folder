@@ -20,6 +20,7 @@ def main():
     # print("Enter text, EOF to quit:")
     print(scramble_words(read_stdin()))
 
+
 def read_stdin():
     data = ''
     for line in sys.stdin:
@@ -75,6 +76,7 @@ def shuffle(iterable):
         iterable[shuffle_index], iterable[target_index] = iterable[target_index], iterable[shuffle_index]
         shuffle_index += 1
     return iterable
+
 
 # Extends shuffle() to make it return a string instead of a list
 def shuffle_string(string):
