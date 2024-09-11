@@ -19,13 +19,13 @@ def main():
     print("Enter text, EOF to quit:")
     print(scramble_words(read_stdin()))
 
-
 def read_stdin():
-    user_input = ''
+    data = ''
     for line in sys.stdin:
         if line.strip() == "EOF":
-            return user_input
-        user_input += line
+            return data
+        data += line
+    return data
 
 
 def scramble_words(string):
