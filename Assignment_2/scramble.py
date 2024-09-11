@@ -16,7 +16,8 @@ import sys
 
 
 def main():
-    print("Enter text, EOF to quit:")
+    # I could not tell if this line invalidates the requirement of only having one output so I have it commented out
+    # print("Enter text, EOF to quit:")
     print(scramble_words(read_stdin()))
 
 def read_stdin():
