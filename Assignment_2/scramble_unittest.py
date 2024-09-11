@@ -30,15 +30,21 @@ class MyTestCase(unittest.TestCase):
         """
         Verify that shuffle() produces a uniform distribution
         """
+        # Generate a sample list of numbers
         values = range(10)
+        # Prepare a list of indices to count
         count = {i: 0 for i in values}
         for _ in range(SAMPLE_COUNT):
             shuffled_list = scramble.shuffle(values)
-            for index, value in enumerate(values) :
+            # For each of the indices of the list add the value in the shuffled list to it's count
+            for index, value in enumerate(values):
                 count[value] += shuffled_list[index]
+        # For a uniform distribution we'd assume the final count for each index should be roughly the same
+        # (within some margin of error)
         print(count)
         mean_value = sum(count.values()) / len(count.values())
         print(f"{mean_value=}")
+        # which we verify by confirming that each index is between the mean value plus or minus the margin
         for value in count.values():
             self.assertGreater(mean_value * (1 + MARGIN_OF_ERROR), value)
             self.assertLess(mean_value * (1 - MARGIN_OF_ERROR), value)
