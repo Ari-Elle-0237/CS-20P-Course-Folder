@@ -1,7 +1,7 @@
 import unittest
 import scramble
 
-tests = (
+TESTS = (
     """"
     According to research at an English university, it does not matter in what order the letters in
     a word are, the only important thing is that the first and last letter are in the right place.
@@ -17,13 +17,31 @@ tests = (
     """
          )
 
-
+SAMPLE_COUNT = 100000
+MARGIN_OF_ERROR = 0.05
 
 class MyTestCase(unittest.TestCase):
     def test_manual(self):
-        for test in tests:
+        # TODO: Automate this test, ns how exactly as this program's output is rng dependent though
+        for test in TESTS:
             print(f"Scrambling:\n{test}")
             print(f"Got:\n{scramble.scramble_words(test)}")
+    def test_shuffle_distribution (self):
+        """
+        Verify that shuffle() produces a uniform distribution
+        """
+        values = range(10)
+        count = {i: 0 for i in values}
+        for _ in range(SAMPLE_COUNT):
+            shuffled_list = scramble.shuffle(values)
+            for index, value in enumerate(values) :
+                count[value] += shuffled_list[index]
+        print(count)
+        mean_value = sum(count.values()) / len(count.values())
+        print(f"{mean_value=}")
+        for value in count.values():
+            self.assertGreater(mean_value * (1 + MARGIN_OF_ERROR), value)
+            self.assertLess(mean_value * (1 - MARGIN_OF_ERROR), value)
 
 
 if __name__ == '__main__':
