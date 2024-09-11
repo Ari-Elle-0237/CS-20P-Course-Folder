@@ -33,23 +33,26 @@ def scramble_words(string):
     # then any  internal punctuation may also match as long as it's followed by another word character)
     words = re.finditer(r"[\w]+(?:[-']+[\w]+)*", string)
     for match in words:
-        # Get the string from the re.Match object (ns if it's better style to use match.group() or match[0] here)
+        # Get the string from the re.Match object
+        # (ns if it's better style to use match.group() or match[0] here)
         word = match.group()
-        # Only proceed if the string is longer than 1 to avoid problems.
+        # Only proceed if the string is long enough to be scrambled to avoid problems
         # <editor-fold: Alternate phrasing>
         # Alternate phrasing for the if statement below with less indentation but use of 'continue'
         # (Personally I find this cleaner but style guide for the class prohibits this)
         # if len(word) == 1:
         #     continue
         # </editor-fold>
-        if len(word) > 1:
-            # Save the beginning and end
+        if len(word) > 3:
+            # Save the beginning and end, scramble the middle
             first, last = word[0], word[-1]
-            # Scramble the middle
             middle = word[1:-1]
-            middle = shuffle_string(middle)
+            shuffled_middle = shuffle_string(middle)
+            # Ensure that the shuffle hasn't reproduced the original by chance
+            while shuffled_middle == middle:
+                shuffled_middle = shuffle_string(middle)
             # Then update the string
-            string = string[:match.start()] + first + middle + last + string[match.end():]
+            string = string[:match.start()] + first + shuffled_middle + last + string[match.end():]
     return string
 
 
