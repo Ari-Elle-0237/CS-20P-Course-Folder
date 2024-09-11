@@ -19,7 +19,7 @@ def main():
     print("Enter text, EOF to quit:")
     user_input = ''
     for line in sys.stdin:
-        if line != "EOF":
+        if line.strip() != "EOF":
             user_input += line
     print(scramble_words(user_input))
 
