@@ -11,6 +11,7 @@ print(bin(xor_ab).count("1"))
 print(xor_ab.bit_length())
 print(xor_ab.bit_count())
 
+
 def compare_bits(bits_a, bits_b):
     # XOR A and B together, then count the number of ones in the resulting binary number to determine
     # the number of differences between
@@ -21,7 +22,10 @@ def compare_bits(bits_a, bits_b):
         return bit_count
     return -1
 
+print(list(enumerate(range(4,11))))
+
 # https://www.geeksforgeeks.org/count-set-bits-using-python-list-comprehension/
+
 
 print(compare_bits(bits_a,bits_b))
 

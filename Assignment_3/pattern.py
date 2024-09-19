@@ -50,15 +50,21 @@ PATTERNS = [int(i, base=2) for i in """
 
 def main():
     data = [int(i, base=2) for i in read_stdin().strip().split("\n")]
+    for num in data:
+        print(match_patterns(num))
 
 
 def match_patterns(num):
     matches = []
     for i, pattern in enumerate(PATTERNS):
-        compare_bits(num, pattern)
-        matches.append((i, pattern))
-    matches.sort()
-    return matches[0]
+        bit_count = compare_bits(num, pattern)
+        matches.append((i, bit_count))
+    # source: https://stackoverflow.com/questions/20183069/how-to-sort-multidimensional-array-by-column
+    matches.sort(key=lambda x: x[1], reverse=True)
+    if matches[0][1] == -1:
+        return -1
+    return matches[0][0]
+
 
 def compare_bits(bits_a, bits_b):
     # XOR A and B together, then count the number of ones in the resulting binary number to determine
