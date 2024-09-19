@@ -54,11 +54,12 @@ def main():
     data = [int(i, base=2) for i in read_stdin().strip().split("\n")]
     # Check For matches on each line
     for num in data:
-        index = match_patterns(num)
-        if index == -1:
+        if num == "":
+            pass
+        elif match_patterns(num) == -1:
             print("error")
         else:
-            print(index)
+            print(match_patterns(num))
 
 
 def match_patterns(num):
