@@ -8,7 +8,7 @@ Test Cases in unittest_pattern.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Oct 3, 2024 7:00pm
 Python Version 3.10
-Exit Code _
+Exit Code 0: Passes all current tests
 """
 import sys
 
