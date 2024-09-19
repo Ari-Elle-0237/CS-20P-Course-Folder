@@ -21,6 +21,8 @@ def compare_bits(bits_a, bits_b):
         return bit_count
     return -1
 
+# https://www.geeksforgeeks.org/count-set-bits-using-python-list-comprehension/
+
 print(compare_bits(bits_a,bits_b))
 
 
