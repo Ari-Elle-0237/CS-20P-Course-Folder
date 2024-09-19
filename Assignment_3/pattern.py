@@ -7,8 +7,9 @@ Pengo: 'azepezau'
 Test Cases in unittest_pattern.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Oct 3, 2024 7:00pm
-Python Version 3.10
+Python Version 3.12
 Exit Code 0: Passes all current tests
+TODO: Write more tests
 """
 import sys
 
@@ -49,30 +50,46 @@ PATTERNS = [int(i, base=2) for i in """
 
 
 def main():
+    # Break up data read from stdin
     data = [int(i, base=2) for i in read_stdin().strip().split("\n")]
+    # Check For matches on each line
     for num in data:
-        print(match_patterns(num))
+        index = match_patterns(num)
+        if index == -1:
+            print("error")
+        else:
+            print(index)
 
 
 def match_patterns(num):
+    """
+    Takes a given number and compares it to all the patterns in PATTERNS, returning the index of the closest
+    matching pattern or -1 if none match.
+    :param num:
+    :return:
+    """
     matches = []
     for i, pattern in enumerate(PATTERNS):
+        # Analyze the differences
         bit_count = compare_bits(num, pattern)
+        # Set to -1 if differences are too great
+        if bit_count > 7:
+            bit_count = -1
+        # Save the result
         matches.append((i, bit_count))
-    # source: https://stackoverflow.com/questions/20183069/how-to-sort-multidimensional-array-by-column
-    matches.sort(key=lambda x: x[1], reverse=True)
+    # Sort our results by their bit_count to find the closest match
+    matches.sort(key=lambda x: x[1], reverse=True)  #                                                                   (source: https://stackoverflow.com/questions/20183069/how-to-sort-multidimensional-array-by-column)
+    # If no matches are found return -1
     if matches[0][1] == -1:
         return -1
+    # Otherwise return the index associated with the best match
     return matches[0][0]
 
 
 def compare_bits(bits_a, bits_b):
-    # XOR A and B together, then count the number of ones in the resulting binary number to determine
-    # the number of differences between, (Note: bit_count() is python 3.10+ only)
-    bit_count = (bits_a ^ bits_b).bit_count()
-    if bit_count <= 7:
-        return bit_count
-    return -1
+    # XOR A and B together, then count the number of ones in the resulting binary number to get the differences         (Note: bit_count() is python 3.10+ only)
+    return (bits_a ^ bits_b).bit_count()
+
 
 
 def read_stdin():
