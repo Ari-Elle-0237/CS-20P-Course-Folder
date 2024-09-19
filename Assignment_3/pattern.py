@@ -9,7 +9,6 @@ Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Oct 3, 2024 7:00pm
 Python Version 3.12
 Exit Code 0: Passes all current tests
-TODO: Write more tests
 """
 import sys
 
@@ -52,7 +51,7 @@ PATTERNS = [int(i, base=2) for i in """
 def main():
     # Break up data read from stdin
     data = [int(i, base=2) for i in read_stdin().strip().split("\n")]
-    # Check For matches on each line
+    # Check for matches on each line
     for num in data:
         if num == "":
             pass
@@ -90,7 +89,6 @@ def match_patterns(num):
 def compare_bits(bits_a, bits_b):
     # XOR A and B together, then count the number of ones in the resulting binary number to get the differences         (Note: bit_count() is python 3.10+ only)
     return (bits_a ^ bits_b).bit_count()
-
 
 
 def read_stdin():

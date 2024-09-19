@@ -1,6 +1,8 @@
 import unittest
 from pattern import *
 
+# TODO: Learn how to write unittests that use stdin/out and can actually test main()
+
 SAMPLE_RUNS = [
     ("01100110100110010110011010011001", 11,),
     ("00110011010011000011001111001100", 10,),
