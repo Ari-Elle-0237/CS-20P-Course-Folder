@@ -4,7 +4,7 @@ Assignment #2: (Program 2) Word Scrambler
 scramble.py
 by Ariel Zepezauer (arielzepezauer@gmail.com
 Pengo: 'azepezau'
-Test Cases in scramble_unittest.py
+Test Cases in unittest_scramble.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Sep 19, 2024 7:00pm
 Exit Code 0: Passes current test cases and visual inspection
