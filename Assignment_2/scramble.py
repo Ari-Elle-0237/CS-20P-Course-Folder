@@ -15,7 +15,7 @@ think of edge cases that still met the assignment requirements in order to chall
 - removed read_stdin(): (which I will confess was fully just me not paying enough attention to your explanation of EOF,
 I just incorrectly assumed what I have now in main() would have been too simple given the explicit mention of handling
 EOF in the assignment description)
-- added scramble_words_no_regex to comply with feedback
+- added scramble_words_no_regex() to comply with feedback
 - Made repository private: might come to office hours for help setting up ssh keys so I can access it from the command
 line again if I can't figure it out on my own, as using my GH password appears to be insufficient.
 """
@@ -68,7 +68,7 @@ def scramble_words_no_regex(string):
     words = string.split(" ")
     ret_string = ""
     for word in words:
-        if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid IndexError problems
+        if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid problems
             unshuffled_word = word
             while word == unshuffled_word:  # Enter a while loop to ensure that the shuffle hasn't reproduced the original by chance
                 if word[-1].is_alphanum(): # Ignore the last character if it's non-alphanumeric
