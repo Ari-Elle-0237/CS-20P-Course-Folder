@@ -9,8 +9,15 @@ Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Sep 19, 2024 7:00pm
 Exit Code 0: Passes current test cases and visual inspection
 
-Edit notes: updated regex to no longer handle internal punctuation, (my apologies for doing so, I was just trying to
-think of edge cases that still met the assignment requirements in order to challenge myself)
+Edit Notes/Explanations vs. Previous submission:
+- updated regex to no longer handle internal punctuation: (my apologies for doing so, I was just trying to
+think of edge cases that still met the assignment requirements in order to challenge myself),
+- removed read_stdin(): (which I will confess was fully just me not paying enough attention to your explanation of EOF,
+I just incorrectly assumed what I have now in main() would have been too simple given the explicit mention of handling
+EOF in the assignment description)
+- added scramble_words_no_regex to comply with feedback
+- Made repository private: might come to office hours for help setting up ssh keys so I can access it from the command
+line again if I can't figure it out on my own, as using my GH password appears to be insufficient.
 """
 
 import re
@@ -53,7 +60,7 @@ def scramble_words(string):
 
 def scramble_words_no_regex(string):
     """
-    Alternate scramble words which does not use regex, at the cost of not preserving whitespace or handling \n, \t, etc.
+    Alternate scramble_words() with no regex, at the cost of not preserving whitespace or handling \n, \t, etc.
     (I will note avoiding regex was not a listed requirement of the assignment or against style guidelines...)
     :param string: to be scrambled
     :return: scrambled string
