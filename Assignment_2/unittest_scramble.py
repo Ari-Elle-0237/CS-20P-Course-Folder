@@ -27,6 +27,12 @@ class MyTestCase(unittest.TestCase):
             print(f"Scrambling:\n{test}")
             print(f"Got:\n{scramble.scramble_words(test)}")
 
+    def test_manual_no_regex(self):
+        # TODO: Automate this test, ns how exactly as this program's output is rng dependent though
+        for test in TESTS:
+            print(f"Scrambling:\n{test}")
+            print(f"Got:\n{scramble.scramble_words_no_regex(test)}")
+
     def test_shuffle_distribution (self):
         """
         Verify that shuffle() produces a uniform distribution

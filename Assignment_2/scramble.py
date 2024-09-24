@@ -9,16 +9,35 @@ Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Sep 19, 2024 7:00pm
 Exit Code 0: Passes current test cases and visual inspection
 
-Edit Notes/Explanations vs. Previous submission:
+Patch Notes/Explanations vs. Previous submission:
+- Made repository private: might come to office hours for help setting up ssh keys so I can access it from the command
+line again if I can't figure it out on my own, as using my GH password appears to be insufficient. For now I have just
+been unprivating to make a git pull and then reprivating if that's ok
+
 - updated regex to no longer handle internal punctuation: (my apologies for doing so, I was just trying to
-think of edge cases that still met the assignment requirements in order to challenge myself),
+think of edge cases that still met the assignment requirements in order to challenge myself, I felt that given that the
+pattern I wrote still functioned fine within the parameters of the assignment, building something that could be
+corrected by simply modifying a simple regex pattern to accept more punctuation marks would be the better approach for
+covering edge cases, particularly given the structure of the pattern made that fairly simple),
+
+- added scramble_words_no_regex() to comply with feedback. (For the record, I am aware regex is overkill for this
+assignment, I only used it because I had already been wanting to teach myself more about python's regex library
+(I am also already pretty comfortable reading and writing regex from my own prior experience) thus it I felt it was an
+appropriate solution since in a way, it was sort of my goal to have "two problems". I appreciate the lack of points
+docked for my doing so)
+
 - removed read_stdin(): (which I will confess was fully just me not paying enough attention to your explanation of EOF,
 I just incorrectly assumed what I have now in main() would have been too simple given the explicit mention of handling
 EOF in the assignment description)
-- added scramble_words_no_regex() to comply with feedback
-- Made repository private: might come to office hours for help setting up ssh keys so I can access it from the command
-line again if I can't figure it out on my own, as using my GH password appears to be insufficient. For now I have just
-been unprivating to make a git pull and then reprivating if thats ok
+
+
+- Abridged some comments for better readability
+
+- Simplified that issue on line ___ per feedback
+
+- Could not replicate the issue with the program hanging on blank line, empty file or empty string tests regardless of
+whether I ran it through powershell or unittest, if the issue is still persisting I can come to office hours and
+show you?
 """
 
 import re
@@ -47,12 +66,6 @@ def scramble_words(string):
     for match in words:
         word = match.group()  # Get the string from the re.Match object
         if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid problems
-            # <editor-fold: Alternate phrasing>
-        # Alternate phrasing for the if statement below with less indentation but use of 'continue'
-        # (Personally I find this cleaner but style guide for the class prohibits this)
-        # if len(word) == 1:
-        #     continue
-        # </editor-fold>
             unshuffled_word = word
             while word == unshuffled_word: # Enter a while loop to correct shuffle reproducing the original by chance
                 word = word[0] + shuffle_string(word[1:-1]) + word[-1]
@@ -61,23 +74,24 @@ def scramble_words(string):
 
 def scramble_words_no_regex(string):
     """
-    Alternate scramble_words() with no regex, at the cost of not preserving whitespace or handling \n, \t, etc.
+    Alternate scramble_words() with no regex, at the cost of not preserving whitespace or handling \n, \t, etc. or
+    leading punctuation properly.
     (I will note avoiding regex was not a listed requirement of the assignment or against style guidelines...)
     :param string: to be scrambled
     :return: scrambled string
     """
     words = string.split(" ")
-    ret_string = ""
+    ret_string = ""  # Return String
     for word in words:
         if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid problems
             unshuffled_word = word
             while word == unshuffled_word:  # Enter a while loop to ensure that the shuffle hasn't reproduced the original by chance
-                if word[-1].is_alphanum(): # Ignore the last character if it's non-alphanumeric
+                if word[-1].isalnum(): # Ignore the last character if it's non-alphanumeric
                     word = word[0] + shuffle_string(word[1:-1]) + word[-1]
                 else:
                     word = word[0] + shuffle_string(word[1:-2]) + word[-2]
             ret_string += word + " "  # Then update the string
-    return string
+    return ret_string
 
 
 def shuffle(iterable):
