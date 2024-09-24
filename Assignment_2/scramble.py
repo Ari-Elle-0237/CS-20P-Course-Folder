@@ -16,19 +16,8 @@ import sys
 
 
 def main():
-    # I could not tell if this line invalidates the requirement of only having one output so I have it commented out
-    # print("Enter text, EOF to quit:")
-    print(scramble_words(read_stdin()))
-
-
-def read_stdin():
-    data = ''
     for line in sys.stdin:
-        if line.strip() == "EOF":
-            return data
-        data += line
-    return data
-
+        print(scramble_words(line))
 
 def scramble_words(string):
     """
@@ -38,8 +27,12 @@ def scramble_words(string):
     :return: scrambled string
     """
     # Regex to compile a list of all re.Match objects for all words in the string,
-    words = re.finditer(r"[\w]+(?:[-']+[\w]+)*", string)  # (Pattern Explanation: Words must begin with at least one
-    # word character, then any internal punctuation may also match as long as it's followed by another word character)
+    words = re.finditer(r"\w+", string)
+    # <editor-fold: Alternate Pattern>
+    # alternate pattern which allows apostrophes and hyphens: r"[\w]+(?:[-']+[\w]+)*"
+    # (Pattern Explanation: Words must begin with at least one word character, then any internal punctuation may also
+    # match as long as it's followed by another word character)
+    # </editor-fold>
     for match in words:
         # Get the string from the re.Match object
         word = match.group()  # (ns if it's better style to use match.group() or match[0] here)
@@ -51,15 +44,12 @@ def scramble_words(string):
         #     continue
         # </editor-fold>
         if len(word) > 3:
-            # Save the beginning and end, then scramble the middle
-            first, last = word[0], word[-1]
-            middle = word[1:-1]
-            shuffled_middle = shuffle_string(middle)
-            # Ensure that the shuffle hasn't reproduced the original by chance
-            while shuffled_middle == middle:
-                shuffled_middle = shuffle_string(middle)
-            # Finally update the string
-            string = string[:match.start()] + first + shuffled_middle + last + string[match.end():]
+            unshuffled_word = word
+            # Enter a while loop to ensure that the shuffle hasn't reproduced the original by chance
+            while word == unshuffled_word:
+                word = word[0] + shuffle_string(word[1:-1]) + word[-1]
+            # Then update the string
+            string = string[:match.start()] + word + string[match.end():]
     return string
 
 

@@ -13,7 +13,7 @@ TESTS = (
     This is a sentence which contains contractions like can't, won't, shouldn't and isn't.
     """,
     """
-    This is a sentence with words that repeat: Words Words Words Words Words Words Words
+    This is a sentence with words that repeat: Words Words Words Words Words Words Words Words
     """,
     """
     This is a sentence with, hy-phen-ation/dashes-
