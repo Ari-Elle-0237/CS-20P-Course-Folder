@@ -17,7 +17,8 @@ I just incorrectly assumed what I have now in main() would have been too simple 
 EOF in the assignment description)
 - added scramble_words_no_regex() to comply with feedback
 - Made repository private: might come to office hours for help setting up ssh keys so I can access it from the command
-line again if I can't figure it out on my own, as using my GH password appears to be insufficient.
+line again if I can't figure it out on my own, as using my GH password appears to be insufficient. For now I have just
+been unprivating to make a git pull and then reprivating if thats ok
 """
 
 import re
