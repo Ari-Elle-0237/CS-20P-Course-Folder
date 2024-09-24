@@ -9,16 +9,12 @@ TESTS = (
     do not read every letter by itself but the word as a whole and the brain figures it out 
     anyway.
     """,
-    """
-    This is a sentence which contains contractions like can't, won't, shouldn't and isn't.
-    """,
-    """
-    This is a sentence with words that repeat: Words Words Words Words Words Words Words Words
-    """,
-    """
-    This is a sentence with, hy-phen-ation/dashes-
-    """
-         )
+    "This is a sentence which contains contractions like can't, won't, shouldn't and isn't.",
+    "This is a sentence with words that repeat: Words Words Words Words Words Words Words Words",
+    "This is a sentence with, hy-phen-ation/dashes-",
+    "",
+    " "
+)
 
 SAMPLE_COUNT = 10000
 MARGIN_OF_ERROR = 0.05

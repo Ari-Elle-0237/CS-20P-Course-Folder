@@ -8,6 +8,9 @@ Test Cases in unittest_scramble.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: Thu Sep 19, 2024 7:00pm
 Exit Code 0: Passes current test cases and visual inspection
+
+Edit notes: updated regex to no longer handle internal punctuation, (my apologies for doing so, I was just trying to
+think of edge cases that still met the assignment requirements in order to challenge myself)
 """
 
 import re
@@ -17,7 +20,8 @@ import sys
 
 def main():
     for line in sys.stdin:
-        print(scramble_words(line))
+        # print(scramble_words(line))
+        print(scramble_words_no_regex(line))
 
 def scramble_words(string):
     """
@@ -26,30 +30,45 @@ def scramble_words(string):
     :param string: to be scrambled
     :return: scrambled string
     """
-    # Regex to compile a list of all re.Match objects for all words in the string,
-    words = re.finditer(r"\w+", string)
+    words = re.finditer(r"\w+", string)  # compile a list of re.Match objects for all words in the string,
     # <editor-fold: Alternate Pattern>
     # alternate pattern which allows apostrophes and hyphens: r"[\w]+(?:[-']+[\w]+)*"
     # (Pattern Explanation: Words must begin with at least one word character, then any internal punctuation may also
     # match as long as it's followed by another word character)
     # </editor-fold>
     for match in words:
-        # Get the string from the re.Match object
-        word = match.group()  # (ns if it's better style to use match.group() or match[0] here)
-        # Then, only proceed if the string is long enough to be scrambled to avoid problems
-        # <editor-fold: Alternate phrasing>
+        word = match.group()  # Get the string from the re.Match object
+        if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid problems
+            # <editor-fold: Alternate phrasing>
         # Alternate phrasing for the if statement below with less indentation but use of 'continue'
         # (Personally I find this cleaner but style guide for the class prohibits this)
         # if len(word) == 1:
         #     continue
         # </editor-fold>
-        if len(word) > 3:
             unshuffled_word = word
-            # Enter a while loop to ensure that the shuffle hasn't reproduced the original by chance
-            while word == unshuffled_word:
+            while word == unshuffled_word: # Enter a while loop to correct shuffle reproducing the original by chance
                 word = word[0] + shuffle_string(word[1:-1]) + word[-1]
-            # Then update the string
-            string = string[:match.start()] + word + string[match.end():]
+            string = string[:match.start()] + word + string[match.end():]  # Then update the string
+    return string
+
+def scramble_words_no_regex(string):
+    """
+    Alternate scramble words which does not use regex, at the cost of not preserving whitespace or handling \n, \t, etc.
+    (I will note avoiding regex was not a listed requirement of the assignment or against style guidelines...)
+    :param string: to be scrambled
+    :return: scrambled string
+    """
+    words = string.split(" ")
+    ret_string = ""
+    for word in words:
+        if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid IndexError problems
+            unshuffled_word = word
+            while word == unshuffled_word:  # Enter a while loop to ensure that the shuffle hasn't reproduced the original by chance
+                if word[-1].is_alphanum(): # Ignore the last character if it's non-alphanumeric
+                    word = word[0] + shuffle_string(word[1:-1]) + word[-1]
+                else:
+                    word = word[0] + shuffle_string(word[1:-2]) + word[-2]
+            ret_string += word + " "  # Then update the string
     return string
 
 
