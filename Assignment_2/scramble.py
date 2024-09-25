@@ -10,34 +10,33 @@ Due: Thu Sep 19, 2024 7:00pm
 Exit Code 0: Passes current test cases and visual inspection
 
 Patch Notes/Explanations vs. Previous submission:
-- Made repository private: might come to office hours for help setting up ssh keys so I can access it from the command
+- Made repository private: might come to office hours for help setting up keys so I can access it from the command
 line again if I can't figure it out on my own, as using my GH password appears to be insufficient. For now I have just
-been unprivating to make a git pull and then reprivating if that's ok
-
-- updated regex to no longer handle internal punctuation: (my apologies for doing so, I was just trying to
-think of edge cases that still met the assignment requirements in order to challenge myself, I felt that given that the
-pattern I wrote still functioned fine within the parameters of the assignment, building something that could be
-corrected by simply modifying a simple regex pattern to accept more punctuation marks would be the better approach for
-covering edge cases, particularly given the structure of the pattern made that fairly simple),
+been unprivating to make a git pull and then reprivating if that's ok.
 
 - added scramble_words_no_regex() to comply with feedback. (For the record, I am aware regex is overkill for this
 assignment, I only used it because I had already been wanting to teach myself more about python's regex library
-(I am also already pretty comfortable reading and writing regex from my own prior experience) thus it I felt it was an
-appropriate solution since in a way, it was sort of my goal to have "two problems". I appreciate the lack of points
-docked for my doing so)
+(I am also already pretty comfortable reading and writing regex from my own prior experience) thus I felt it was an
+appropriate solution since in a way, it was sort of my *goal* to have "two problems".)
+
+- updated regex to no longer handle internal punctuation: (Did not realize this was wrong, I was just trying to
+think of edge cases that still met the assignment requirements in order to challenge myself, I felt that given that the
+pattern I wrote still functioned fine within the parameters of the assignment, building something that could be
+corrected by modifying a simple regex pattern to accept more punctuation marks would be the better approach for
+covering edge cases),
 
 - removed read_stdin(): (which I will confess was fully just me not paying enough attention to your explanation of EOF,
 I just incorrectly assumed what I have now in main() would have been too simple given the explicit mention of handling
 EOF in the assignment description)
 
-
 - Abridged some comments for better readability
 
-- Simplified that issue on line ___ per feedback
+- Simplified the "Shuffle the word" step per feedback
 
-- Could not replicate the issue with the program hanging on blank line, empty file or empty string tests regardless of
-whether I ran it through powershell or unittest, if the issue is still persisting I can come to office hours and
-show you?
+- Assuming I read you correctly, I could not replicate the issue with the program hanging on blank line, empty file or
+empty string tests regardless of whether I ran it through powershell or unittest or on the new attempt or the old one,
+if the issue is still persisting with my amended version I can come to office hours to show you/ask what you meant in
+your feedback.
 """
 
 import re
@@ -59,17 +58,18 @@ def scramble_words(string):
     """
     words = re.finditer(r"\w+", string)  # compile a list of re.Match objects for all words in the string,
     # <editor-fold: Alternate Pattern>
-    # alternate pattern which allows apostrophes and hyphens: r"[\w]+(?:[-']+[\w]+)*"
-    # (Pattern Explanation: Words must begin with at least one word character, then any internal punctuation may also
-    # match as long as it's followed by another word character)
+    # Alternate pattern which allows apostrophes and hyphens: r"[\w]+(?:[-']+[\w]+)*"
+    # Pattern Explanation: Words must begin with at least one word character, then any internal punctuation may also
+    # match as long as it's followed by another word character, additional internal punctuation marks may be added by
+    # placing them inside the set of brackets after '?:'
     # </editor-fold>
     for match in words:
         word = match.group()  # Get the string from the re.Match object
         if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid problems
             unshuffled_word = word
             while word == unshuffled_word: # Enter a while loop to correct shuffle reproducing the original by chance
-                word = word[0] + shuffle_string(word[1:-1]) + word[-1]
-            string = string[:match.start()] + word + string[match.end():]  # Then update the string
+                word = word[0] + shuffle_string(word[1:-1]) + word[-1] # Shuffle the word
+            string = string[:match.start()] + word + string[match.end():]  # Then update the string with that word
     return string
 
 def scramble_words_no_regex(string):
@@ -85,7 +85,7 @@ def scramble_words_no_regex(string):
     for word in words:
         if len(word) > 3:  # Only proceed if the string is long enough to be scrambled to avoid problems
             unshuffled_word = word
-            while word == unshuffled_word:  # Enter a while loop to ensure that the shuffle hasn't reproduced the original by chance
+            while word == unshuffled_word:  # Enter a while loop to stop shuffle reproducing the original by chance
                 if word[-1].isalnum(): # Ignore the last character if it's non-alphanumeric
                     word = word[0] + shuffle_string(word[1:-1]) + word[-1]
                 else:
