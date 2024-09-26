@@ -19,9 +19,9 @@ assignment, I only used it because I had already been wanting to teach myself mo
 (I am also already pretty comfortable reading and writing regex from my own prior experience) thus I felt it was an
 appropriate solution since in a way, it was sort of my goal to have "two problems" lol.)
 
-- updated regex to no longer handle internal punctuation
+- updated regex to no longer handle internal punctuation to comply with feedback
 
-- removed read_stdin()
+- removed erroneous read_stdin() function, modified main to process lines one by one.
 
 - Abridged some comments for better readability
 
