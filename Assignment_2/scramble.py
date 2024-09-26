@@ -19,15 +19,9 @@ assignment, I only used it because I had already been wanting to teach myself mo
 (I am also already pretty comfortable reading and writing regex from my own prior experience) thus I felt it was an
 appropriate solution since in a way, it was sort of my goal to have "two problems" lol.)
 
-- updated regex to no longer handle internal punctuation: (Did not realize this was wrong, I was just trying to
-think of edge cases that still met the assignment requirements in order to challenge myself, I felt that given that the
-pattern I wrote still functioned fine within the parameters of the assignment, building something that could be
-corrected by modifying a simple regex pattern to accept more punctuation marks would be the better approach for
-covering edge cases),
+- updated regex to no longer handle internal punctuation
 
-- removed read_stdin(): (which I will confess was fully just me not paying enough attention to your explanation of EOF,
-I just incorrectly assumed what I have now in main() would have been too simple given the explicit mention of handling
-EOF in the assignment description)
+- removed read_stdin()
 
 - Abridged some comments for better readability
 
