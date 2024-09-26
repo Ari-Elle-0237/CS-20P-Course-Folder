@@ -52,7 +52,7 @@ def scramble_words(string):
     """
     words = re.finditer(r"\w+", string)  # compile a list of re.Match objects for all words in the string,
     # <editor-fold: Alternate Pattern>
-    # Alternate pattern which allows apostrophes and hyphens: r"[\w]+(?:[-']+[\w]+)*"
+    # Alternate pattern which allows words with apostrophes and hyphens to also be scrambled: r"[\w]+(?:[-']+[\w]+)*"
     # Pattern Explanation: Words must begin with at least one word character, then any internal punctuation may also
     # match as long as it's followed by another word character, additional internal punctuation marks may be added by
     # placing them inside the set of brackets after '?:'
