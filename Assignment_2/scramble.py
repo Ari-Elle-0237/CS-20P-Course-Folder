@@ -76,7 +76,6 @@ def scramble_words_no_regex(string):
     """
     Alternate scramble_words() with no regex, at the cost of not preserving whitespace or handling \n, \t, etc. or
     leading punctuation properly.
-    (I will note avoiding regex was not a listed requirement of the assignment or against style guidelines...)
     :param string: to be scrambled
     :return: scrambled string
     """
