@@ -17,7 +17,7 @@ been unprivating to make a git pull and then reprivating if that's ok.
 - added scramble_words_no_regex() to comply with feedback. (For the record, I am aware regex is overkill for this
 assignment, I only used it because I had already been wanting to teach myself more about python's regex library
 (I am also already pretty comfortable reading and writing regex from my own prior experience) thus I felt it was an
-appropriate solution since in a way, it was sort of my *goal* to have "two problems".)
+appropriate solution since in a way, it was sort of my goal to have "two problems" lol.)
 
 - updated regex to no longer handle internal punctuation: (Did not realize this was wrong, I was just trying to
 think of edge cases that still met the assignment requirements in order to challenge myself, I felt that given that the
