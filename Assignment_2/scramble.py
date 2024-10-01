@@ -86,7 +86,6 @@ def scramble_words_no_regex(string):
             ret_string += word + " "  # Then update the string
     return ret_string
 
-
 def shuffle(iterable):
     """
     Shuffles an iterable using the Fisher-Yates algorithm described in class
@@ -101,7 +100,6 @@ def shuffle(iterable):
         shuffle_index += 1
     return iterable
 
-
 # Extends shuffle() to make it return a string instead of a list
 def shuffle_string(string):
     return "".join(shuffle(string))
@@ -110,7 +108,6 @@ def shuffle_string(string):
     # # (Source: https://stackoverflow.com/questions/6181304/are-there-any-ways-to-scramble-strings-in-python)
     # return ''.join(random.sample(string, len(string)))
     # </editor-fold>
-
 
 if __name__ == "__main__":
     main()

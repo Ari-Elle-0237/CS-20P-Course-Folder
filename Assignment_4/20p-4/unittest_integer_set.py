@@ -1,5 +1,5 @@
 import unittest
-from assignment4 import *
+from integer_set import *
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
