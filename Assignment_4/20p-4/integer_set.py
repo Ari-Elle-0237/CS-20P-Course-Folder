@@ -8,22 +8,21 @@ Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
 Due: _______
 Exit Code _:________
 """
+from openpyxl.descriptors import Typed
 
 
-class integer_set:  # (PEP8 noncompliance in this class required by assignment spec)
+class integer_set:
+    """
+    Class for storing sets of integers equal to or between 0 and the constant SETUPPERLIMIT (1000 by default)
+    (PEP8 noncompliance in this Class is required by assignment spec)
+    """
     SETUPPERLIMIT = 1000
 
     def __init__(self, initialElements=[]):  # List[int]
         self.elements = initialElements
 
-
     @property
     def elements(self):
-        # ret = []
-        # for i in self._elements:
-        #     if self.hasElement(i):
-        #         ret += i
-        # return ret
         return self._elements
 
     @elements.setter
@@ -43,17 +42,25 @@ class integer_set:  # (PEP8 noncompliance in this class required by assignment s
         return self.SETUPPERLIMIT
 
     def insertElement(self, e: int):
+        if not self.check_range(e):
+            return
         self.elements[e] = True
 
     def deleteElement(self, e: int):
+        if not self.check_range(e):
+            return
         self.elements[e] = False
-
 
     def hasElement(self, e: int) -> bool:
         return self.elements[e]
 
     def equals(self, other) -> bool:
-        raise NotImplemented
+        return self.elements == other.elements
+
+    def check_range(self, value):
+        if not isinstance(value, int):
+            raise TypeError("Tried to put a non-integer into an integer set!")
+        return 0 <= value <= self.SETUPPERLIMIT
 
     def __str__(self):
         elements = []
@@ -69,11 +76,12 @@ class integer_set:  # (PEP8 noncompliance in this class required by assignment s
         return ret
 
     def intersectionOf(self, other1, other2):
-        raise NotImplemented
+        self._elements = [other1.elements[i] & other2[i] for i in range(self.SETUPPERLIMIT)]
+        return self.elements
 
     def unionOf(self, other1, other2):
-        raise NotImplemented
-
+        self._elements = [other1.elements[i] | other2[i] for i in range(self.SETUPPERLIMIT)]
+        return self.elements
 
 class SomeClass:
     SOME_CONSTANT = 2
