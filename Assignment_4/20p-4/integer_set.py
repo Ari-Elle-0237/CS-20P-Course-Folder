@@ -51,6 +51,8 @@ class integer_set:
         self.elements[e] = False
 
     def hasElement(self, e: int) -> bool:
+        if not self.check_range(e):
+            return False
         return self.elements[e]
 
     def equals(self, other) -> bool:
@@ -72,11 +74,11 @@ class integer_set:
         return ret
 
     def intersectionOf(self, other1, other2):
-        self._elements = [other1.elements[i] & other2.elements[i] for i in range(self.SETUPPERLIMIT)]
+        self._elements = [other1.elements[i] & other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
         return self.elements
 
     def unionOf(self, other1, other2):
-        self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT)]
+        self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
         return self.elements
 
 class SomeClass:
