@@ -3,18 +3,17 @@ Assignment #4: Integer Sets
 integer_set.py
 by Ariel Zepezauer (arielzepezauer@gmail.com
 Pengo: 'azepezau'
-Test Cases in unittest_integer_set.py
+Test Cases in unittest_integer_set.py and program4.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
-Due: _______
-Exit Code _:________
+Due: Oct 17th 2024
+Exit Code 0: Passes all tests
 """
-from openpyxl.descriptors import Typed
 
 
 class integer_set:
     """
     Class for storing sets of integers equal to or between 0 and the constant SETUPPERLIMIT (1000 by default)
-    (PEP8 noncompliance in this Class is required by assignment spec)
+    (PEP8 violations in this Class are required by assignment spec)
     """
     SETUPPERLIMIT = 1000
 
@@ -33,9 +32,9 @@ class integer_set:
 
     def get_elements(self):
         ret = []
-        for i in self.elements:
-            if self.hasElement(i):
-                ret += i
+        for i, v in enumerate(self.elements):
+            if v:
+                ret.append(i)
         return ret
 
     def getUpperLimit(self) -> int:
@@ -63,24 +62,21 @@ class integer_set:
         return 0 <= value <= self.SETUPPERLIMIT
 
     def __str__(self):
-        elements = []
-        for i in self.elements:
-            if self.hasElement(i):
-                elements += i
+        elements = self.get_elements()
         ret = "{"
-        for element in elements:
+        for element in self.get_elements():
             if element != elements[-1]:
-                ret += element + ", "
+                ret += str(element) + ", "
             else:
-                ret += element + "}"
+                ret += str(element) + "}"
         return ret
 
     def intersectionOf(self, other1, other2):
-        self._elements = [other1.elements[i] & other2[i] for i in range(self.SETUPPERLIMIT)]
+        self._elements = [other1.elements[i] & other2.elements[i] for i in range(self.SETUPPERLIMIT)]
         return self.elements
 
     def unionOf(self, other1, other2):
-        self._elements = [other1.elements[i] | other2[i] for i in range(self.SETUPPERLIMIT)]
+        self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT)]
         return self.elements
 
 class SomeClass:
