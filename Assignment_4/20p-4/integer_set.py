@@ -81,85 +81,6 @@ class integer_set:
         self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
         return self.elements
 
-class IntegerSetBytes:
-    """
-    Class for storing sets of integers using bytes with no upper or lower limit
-    """
-    def __init__(self, initial_elements=None):  # List[int]
-        self.upper_limit, self.lower_limit = 0, 0
-        self.elements = initial_elements
-
-    def update_limits(self,value):
-        if not hasattr(value, '__iter__'):
-            value = [value]
-        for i in value:
-            if not isinstance(i, int):
-                raise TypeError("Tried to insert a non integer into an integer array!")
-            if value > self.upper_limit:
-                self.upper_limit = value
-            if value < self.lower_limit:
-                self.upper_limit = value
-
-
-    def range(self):
-        return self.upper_limit - self.lower_limit
-
-    @property
-    def elements(self):
-        return self._elements
-
-    @elements.setter
-    def elements(self,value):
-        self.bin = 0b0 << self.range()
-        if value is None:
-            return
-        for element in value:
-            self.insert(element)
-
-    @property
-    def bin(self):
-        return self._bin
-
-    @bin.setter
-    def bin(self, value):
-        self._bin = value
-
-    def insert(self, value: int):
-        self.update_limits(value)
-
-
-    def deleteElement(self, e: int):
-        pass
-
-    def hasElement(self, e: int) -> bool:
-        pass
-
-    def equals(self, other) -> bool:
-        return self.elements == other.elements
-
-    def check_range(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Tried to put a non-integer into an integer set!")
-        return 0 <= value <= self.SETUPPERLIMIT
-
-    def __str__(self):
-        elements = self.get_elements()
-        ret = "{"
-        for element in self.get_elements():
-            if element != elements[-1]:
-                ret += str(element) + ", "
-            else:
-                ret += str(element) + "}"
-        return ret
-
-    def intersectionOf(self, other1, other2):
-        self._elements = [other1.elements[i] & other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
-        return self.elements
-
-    def unionOf(self, other1, other2):
-        self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
-        return self.elements
-
 class PositiveIntegerSetBytes(integer_set):
     """
     Class for storing sets of integers greater than or equal to 0
@@ -170,24 +91,10 @@ class PositiveIntegerSetBytes(integer_set):
         self.bin = 0b0
         self.elements = initial_elements
 
+    # <editor-fold: Properties>
     @property
     def elements(self):
         return self.get_one_bit_indices(self.bin)
-
-    def get_elements(self):
-        return self.elements
-
-    @staticmethod
-    def get_one_bit_indices(value):
-        # source: https://stackoverflow.com/questions/49592295/getting-the-position-of-1-bits-in-a-python-long-object
-        one_bit_indexes = []
-        index = 0
-        while value:  # returns true if sum is non-zero
-            if value & 1:  # returns true if right-most bit is 1
-                one_bit_indexes.append(index)
-            value >>= 1  # discard the right-most bit
-            index += 1
-        return one_bit_indexes
 
     @elements.setter
     def elements(self,value):
@@ -197,12 +104,6 @@ class PositiveIntegerSetBytes(integer_set):
         for element in value:
             self.insert(element)
 
-    def insertElement(self, e: int):
-        self.insert(e)
-
-    def deleteElement(self, e: int):
-        self.delete_element(e)
-
     @property
     def bin(self):
         return self._bin
@@ -210,13 +111,9 @@ class PositiveIntegerSetBytes(integer_set):
     @bin.setter
     def bin(self, value):
         self._bin = value
+    # </editor-fold: Properties>
 
-    def get_upper_limit(self):
-        return
-
-    def getUpperLimit(self):
-        self.get_upper_limit()
-
+    # <editor-fold: Methods>
     def insert(self, value: int):
         # Set the bit at the index provided by value
         if self.check_range(value):
@@ -232,18 +129,12 @@ class PositiveIntegerSetBytes(integer_set):
         # Rearranged from https://stackoverflow.com/questions/2576712/using-python-how-can-i-read-the-bits-in-a-byte
         if not self.check_range(value):
             return False
-        return (self.bin & (0b1 << value - 1)) != 0
-
-    def hasElement(self, e: int) -> bool:
-        self.has_element(e)
+        return (self.bin & (0b1 << value)) != 0
 
     def equals(self, other) -> bool:
         if isinstance(other, PositiveIntegerSetBytes):
             return self.bin == other.bin
         return super().equals(other)
-
-    def check_range(self,value):
-        return value >= 0
 
     def intersectionOf(self, other1, other2):
         self.bin = other1.bin & other2.bin
@@ -252,8 +143,93 @@ class PositiveIntegerSetBytes(integer_set):
     def unionOf(self, other1, other2):
         self.bin = other1.bin | other2.bin
         return self.elements
+    # </editor-fold>
 
+    # <editor-fold: Utilities>
+    @staticmethod
+    def get_one_bit_indices(value):
+        # source: https://stackoverflow.com/questions/49592295/getting-the-position-of-1-bits-in-a-python-long-object
+        one_bit_indexes = []
+        index = 0
+        while value:  # returns true if sum is non-zero
+            if value & 1:  # returns true if right-most bit is 1
+                one_bit_indexes.append(index)
+            value >>= 1  # discard the right-most bit
+            index += 1
+        return one_bit_indexes
 
+    def check_range(self,value):
+        return value >= 0
+    # </editor-fold>
+
+    # <editor-fold: Backwards compatibility redirects>
+    def get_elements(self):
+        return self.elements
+
+    def insertElement(self, e: int):
+        self.insert(e)
+
+    def deleteElement(self, e: int):
+        self.delete_element(e)
+
+    def hasElement(self, e: int) -> bool:
+        return self.has_element(e)
+
+    def getUpperLimit(self):
+        self.get_upper_limit()
+    # </editor-fold>
+
+    # <editor-fold: Disabled Parent Methods>
+    def get_upper_limit(self):
+        raise AttributeError
+    # </editor-fold>
+
+class IntegerSetBytes(PositiveIntegerSetBytes):
+    def __init__(self, initial_elements=None):
+        self.min, self.max = None, None
+        super().__init__(initial_elements)
+
+    def update_min_max_lazy(self, value):
+        if value > self.max or self.max is None:
+            self.max = value
+        if value < self.min or self.min is None:
+            self.min = value
+
+    def update_range(self, value):
+        try:
+            self.update_min_max_lazy(value)
+        except AttributeError:
+            for num in value:
+                self.update_min_max_lazy(num)
+
+    def translate_to_index(self, value):
+        self.update_range(value)
+        return (value - self.min) + 1
+
+    # <editor-fold: Properties>
+    # @property
+    # def range(self):
+    #     return self.min, self.max
+    #
+    # @range.setter
+    # def range(self, value):
+    #     self.min, self.max = value
+
+    @property
+    def elements(self):
+        return self.get_one_bit_indices(self.bin >> self.min)
+
+    @elements.setter
+    def elements(self,value):
+        self.min, self.max = 0, 0
+        super().elements = value
+    # </editor-fold: Properties>
+
+    def check_range(self,value):
+        return True
+
+    def insert(self, value):
+        super().insert(self.translate_to_index(value))
 
 def main():
     pass
