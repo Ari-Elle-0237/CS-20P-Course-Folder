@@ -4,6 +4,7 @@
 # this code goes in your program4.py file:
 import integer_set
 import random
+import unittest
 import unittest_integer_set
 
 random.seed(0)
@@ -52,5 +53,4 @@ if (is1.hasElement(7)):
 else:
     print("4: is1 does not have 7")
 
-test_case = unittest_integer_set.MyTestCase()
-unittest_integer_set.unittest.main(test_case)
+unittest.main(unittest_integer_set)

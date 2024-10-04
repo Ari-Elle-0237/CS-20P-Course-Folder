@@ -81,30 +81,179 @@ class integer_set:
         self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
         return self.elements
 
-class SomeClass:
-    SOME_CONSTANT = 2
-    some_class_var = 0
-    def __init__(self):
-        self._somevar = None
+class IntegerSetBytes:
+    """
+    Class for storing sets of integers using bytes with no upper or lower limit
+    """
+    def __init__(self, initial_elements=None):  # List[int]
+        self.upper_limit, self.lower_limit = 0, 0
+        self.elements = initial_elements
+
+    def update_limits(self,value):
+        if not hasattr(value, '__iter__'):
+            value = [value]
+        for i in value:
+            if not isinstance(i, int):
+                raise TypeError("Tried to insert a non integer into an integer array!")
+            if value > self.upper_limit:
+                self.upper_limit = value
+            if value < self.lower_limit:
+                self.upper_limit = value
+
+
+    def range(self):
+        return self.upper_limit - self.lower_limit
 
     @property
-    def somevar(self):
-        return self._somevar
+    def elements(self):
+        return self._elements
 
-    @somevar.setter
-    def somevar(self, value):
-        self._somevar = value
+    @elements.setter
+    def elements(self,value):
+        self.bin = 0b0 << self.range()
+        if value is None:
+            return
+        for element in value:
+            self.insert(element)
 
-    def some_method(self, some_arg):
-        self.somevar = some_arg * self.SOME_CONSTANT
+    @property
+    def bin(self):
+        return self._bin
+
+    @bin.setter
+    def bin(self, value):
+        self._bin = value
+
+    def insert(self, value: int):
+        self.update_limits(value)
+
+
+    def deleteElement(self, e: int):
+        pass
+
+    def hasElement(self, e: int) -> bool:
+        pass
+
+    def equals(self, other) -> bool:
+        return self.elements == other.elements
+
+    def check_range(self, value):
+        if not isinstance(value, int):
+            raise TypeError("Tried to put a non-integer into an integer set!")
+        return 0 <= value <= self.SETUPPERLIMIT
+
+    def __str__(self):
+        elements = self.get_elements()
+        ret = "{"
+        for element in self.get_elements():
+            if element != elements[-1]:
+                ret += str(element) + ", "
+            else:
+                ret += str(element) + "}"
+        return ret
+
+    def intersectionOf(self, other1, other2):
+        self._elements = [other1.elements[i] & other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
+        return self.elements
+
+    def unionOf(self, other1, other2):
+        self._elements = [other1.elements[i] | other2.elements[i] for i in range(self.SETUPPERLIMIT + 1)]
+        return self.elements
+
+class PositiveIntegerSetBytes(integer_set):
+    """
+    Class for storing sets of integers greater than or equal to 0
+    """
+
+    def __init__(self, initial_elements=None):
+        super().__init__()
+        self.bin = 0b0
+        self.elements = initial_elements
+
+    @property
+    def elements(self):
+        return self.get_one_bit_indices(self.bin)
+
+    def get_elements(self):
+        return self.elements
 
     @staticmethod
-    def some_static(self):
-        return 2
+    def get_one_bit_indices(value):
+        # source: https://stackoverflow.com/questions/49592295/getting-the-position-of-1-bits-in-a-python-long-object
+        one_bit_indexes = []
+        index = 0
+        while value:  # returns true if sum is non-zero
+            if value & 1:  # returns true if right-most bit is 1
+                one_bit_indexes.append(index)
+            value >>= 1  # discard the right-most bit
+            index += 1
+        return one_bit_indexes
 
-    @classmethod
-    def some_class_method(cls, some_arg):
-        cls.some_class_var = some_arg * cls.SOME_CONSTANT
+    @elements.setter
+    def elements(self,value):
+        self.bin = 0b0
+        if value is None:
+            return
+        for element in value:
+            self.insert(element)
+
+    def insertElement(self, e: int):
+        self.insert(e)
+
+    def deleteElement(self, e: int):
+        self.delete_element(e)
+
+    @property
+    def bin(self):
+        return self._bin
+
+    @bin.setter
+    def bin(self, value):
+        self._bin = value
+
+    def get_upper_limit(self):
+        return
+
+    def getUpperLimit(self):
+        self.get_upper_limit()
+
+    def insert(self, value: int):
+        # Set the bit at the index provided by value
+        if self.check_range(value):
+            self.bin |= 0b1 << value
+
+    def delete_element(self, value: int):
+        # Clear the bit at the index provided by value
+        if self.check_range(value):
+            self.bin &= ~(0b1 << value)
+
+    def has_element(self, value: int) -> bool:
+        # Read the bit at the index provided by value
+        # Rearranged from https://stackoverflow.com/questions/2576712/using-python-how-can-i-read-the-bits-in-a-byte
+        if not self.check_range(value):
+            return False
+        return (self.bin & (0b1 << value - 1)) != 0
+
+    def hasElement(self, e: int) -> bool:
+        self.has_element(e)
+
+    def equals(self, other) -> bool:
+        if isinstance(other, PositiveIntegerSetBytes):
+            return self.bin == other.bin
+        return super().equals(other)
+
+    def check_range(self,value):
+        return value >= 0
+
+    def intersectionOf(self, other1, other2):
+        self.bin = other1.bin & other2.bin
+        return self.elements
+
+    def unionOf(self, other1, other2):
+        self.bin = other1.bin | other2.bin
+        return self.elements
+
+
 
 def main():
     pass

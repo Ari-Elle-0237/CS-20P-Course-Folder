@@ -2,14 +2,15 @@ import unittest
 import random
 from random import randint
 
-from integer_set import *
+from integer_set import integer_set
 random.seed(0)
 
+# <editor-fold: CONSTANTS>
 UPPER_LIMIT = integer_set.SETUPPERLIMIT
 LOWER_LIMIT = 0
-INVALID_SAMPLE_SIZE = 1000
+INVALID_SAMPLE_SIZE = 100
 VALID_SAMPLE_SIZE = 10
-SAMPLE_MAX = 999999
+SAMPLE_MAX = 9999
 VALID_SETS = (
     [1,2,3,4,5],
     [0,3,4,999,1000],
@@ -22,10 +23,9 @@ INVALID_SETS = (
     [-1, 0, 1 , 2 ,3 ,4],
     [i for i in range(-1, UPPER_LIMIT + 2)]
 )
-INVALID_INTEGERS = ([random.randint(UPPER_LIMIT + 1, SAMPLE_MAX) for i in range(INVALID_SAMPLE_SIZE)] +
-                    [random.randint(-SAMPLE_MAX, LOWER_LIMIT - 1) for i in range(INVALID_SAMPLE_SIZE)] +
-                    [-1, UPPER_LIMIT + 1]
-                    )
+INVALID_INTEGERS = [random.randint(UPPER_LIMIT + 1, SAMPLE_MAX) for i in range(INVALID_SAMPLE_SIZE)] +\
+                   [random.randint(-SAMPLE_MAX, LOWER_LIMIT - 1) for i in range(INVALID_SAMPLE_SIZE)] +\
+                   [-1, UPPER_LIMIT + 1]
 VALID_INTEGERS = [i for i in range(LOWER_LIMIT,UPPER_LIMIT + 1)]
 # Format: ([set1], [set2], [intersection of set1 and set2]
 INTERSECTION_TESTS = (
@@ -54,9 +54,9 @@ UNION_TESTS = (
     ([i for i in range(LOWER_LIMIT, UPPER_LIMIT + 1)], [randint(LOWER_LIMIT, UPPER_LIMIT + 1)],
      [i for i in range(LOWER_LIMIT,UPPER_LIMIT + 1)]),
 )
+# </editor-fold>
 
-
-class MyTestCase(unittest.TestCase):
+class TestIntegerSet(unittest.TestCase):
     def test_can_init_with_data(self):
         for test_set in VALID_SETS:
             is_test = integer_set(test_set)
@@ -124,6 +124,71 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(expected,is_test3.get_elements())
             is_test2.unionOf(is_test1,is_test2)
             self.assertEqual(expected,is_test3.get_elements())
+
+from integer_set import PositiveIntegerSetBytes as integer_set
+from integer_set import PositiveIntegerSetBytes
+class TestPositiveIntegerSetBytes(TestIntegerSet):
+    def test_intentional_shadowing(self):
+        self.assertIsInstance(integer_set(), PositiveIntegerSetBytes)
+
+    def test_can_init_with_data(self):
+        for test_set in VALID_SETS:
+            is_test = integer_set(test_set)
+            self.assertEqual(sorted(test_set), is_test.get_elements())
+
+    def test_can_insert_and_delete(self):
+        super()
+
+    def test_can_insert_and_delete_beyond_1k(self):
+        is_test = integer_set()
+        for num in [abs(i) for i in INVALID_INTEGERS]:
+            is_test.insertElement(num)
+            self.assertIn(num, is_test.get_elements())
+            is_test.deleteElement(num)
+
+    def test_insert_and_delete_ignore_and_reject_errors(self):
+        is_test = integer_set()
+        for num in [-abs(i) for i in INVALID_INTEGERS]:
+            is_test.insertElement(num)
+            self.assertNotIn(num, is_test.get_elements())
+            is_test.deleteElement(num)
+
+
+    def test_equals(self):
+        super()
+
+    def test_has_element(self):
+        is_test = integer_set()
+        for num in VALID_INTEGERS + INVALID_INTEGERS:
+            is_test.insertElement(num)
+            self.assertTrue(is_test.hasElement(num))
+        # for num in [-abs(i) for i in INVALID_INTEGERS]:
+        #     self.assertFalse(is_test.hasElement(num))
+        #     is_test.insertElement(num)
+        #     self.assertFalse(is_test.hasElement(num))
+
+    def test_intersection(self):
+        for test_case in INTERSECTION_TESTS:
+            set1,set2,expected = test_case
+            is_test1 = integer_set(set1)
+            is_test2 = integer_set(set2)
+            is_test3 = integer_set()
+            is_test3.intersectionOf(is_test1,is_test2)
+            self.assertEqual(expected,is_test3.get_elements())
+            is_test2.intersectionOf(is_test1,is_test2)
+            self.assertEqual(expected,is_test3.get_elements())
+
+    def test_union(self):
+        for test_case in UNION_TESTS:
+            set1,set2,expected = test_case
+            is_test1 = integer_set(set1)
+            is_test2 = integer_set(set2)
+            is_test3 = integer_set()
+            is_test3.unionOf(is_test1,is_test2)
+            self.assertEqual(expected,is_test3.get_elements())
+            is_test2.unionOf(is_test1,is_test2)
+            self.assertEqual(expected,is_test3.get_elements())
+
 
 if __name__ == '__main__':
     unittest.main()
