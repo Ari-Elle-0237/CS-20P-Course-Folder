@@ -49,16 +49,13 @@ PATTERNS = [int(i, base=2) for i in """
 
 
 def main():
-    # Break up data read from stdin
-    data = [int(i, base=2) for i in read_stdin().strip().split("\n")]
-    # Check for matches on each line
-    for num in data:
-        if num == "":
+    for line in sys.stdin:
+        if line == "":
             pass
-        elif match_patterns(num) == -1:
+        elif match_patterns(line) == -1:
             print("error")
         else:
-            print(match_patterns(num))
+            print(match_patterns(line))
 
 
 def match_patterns(num):
@@ -89,15 +86,6 @@ def match_patterns(num):
 def compare_bits(bits_a, bits_b):
     # XOR A and B together, then count the number of ones in the resulting binary number to get the differences         (Note: bit_count() is python 3.10+ only)
     return (bits_a ^ bits_b).bit_count()
-
-
-def read_stdin():
-    data = ''
-    for line in sys.stdin:
-        if line.strip() == "EOF":
-            return data
-        data += line
-    return data
 
 
 if __name__ == "__main__":
