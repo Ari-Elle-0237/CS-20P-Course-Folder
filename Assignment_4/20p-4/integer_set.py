@@ -204,7 +204,7 @@ class IntegerSetBytes(PositiveIntegerSetBytes):
 
     def translate_to_index(self, value):
         self.update_range(value)
-        return (value - self.min) + 1
+        return (value - self.min)
 
     # <editor-fold: Properties>
     # @property
@@ -222,7 +222,12 @@ class IntegerSetBytes(PositiveIntegerSetBytes):
     @elements.setter
     def elements(self,value):
         self.min, self.max = 0, 0
-        super().elements = value
+        # super().elements = value
+        self.bin = 0b0
+        if value is None:
+            return
+        for element in value:
+            self.insert(element)
     # </editor-fold: Properties>
 
     def check_range(self,value):
@@ -232,6 +237,10 @@ class IntegerSetBytes(PositiveIntegerSetBytes):
         super().insert(self.translate_to_index(value))
 
 def main():
+    test_is = IntegerSetBytes([99,98])
+    print(test_is.elements)
+    print(f"{test_is.bin:b}")
+
     pass
 
 if __name__ == "__main__":
