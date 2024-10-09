@@ -14,10 +14,10 @@ Patch Notes/Explanations vs. Previous submission:
 line again if I can't figure it out on my own, as using my GH password appears to be insufficient. For now I have just
 been unprivating to make a git pull and then reprivating if that's ok.
 
-- added scramble_words_no_regex() to comply with feedback. (For the record, I am aware regex is overkill for this
+- added scramble_words_no_regex() to comply with feedback; For the record, I am aware regex is overkill for this
 assignment, I only used it because I had already been wanting to teach myself more about python's regex library
 (I am also already pretty comfortable reading and writing regex from my own prior experience) thus I felt it was an
-appropriate solution since in a way, it was sort of my goal to have "two problems" lol.)
+appropriate solution since in a way, it was sort of my goal to have "two problems" lol :)
 
 - updated regex to no longer handle internal punctuation to comply with feedback
 
