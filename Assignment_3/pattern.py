@@ -50,15 +50,17 @@ PATTERNS = [int(i, base=2) for i in """
 
 def main():
     for line in sys.stdin:
-        if line == "":
-            pass
-        elif match_patterns(line) == -1:
-            print("error")
-        else:
-            print(match_patterns(line))
+        try:
+            line = int(line, base=2)
+            if match_patterns(line) == -1:
+                print("error")
+            else:
+                print(match_patterns(line))
+        except ValueError:
+            print("error: invalid input")
 
 
-def match_patterns(num):
+def match_patterns(num: int):
     """
     Takes a given number and compares it to all the patterns in PATTERNS, returning the index of the closest
     matching pattern or -1 if none match.
