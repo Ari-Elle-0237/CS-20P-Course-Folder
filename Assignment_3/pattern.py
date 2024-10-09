@@ -72,10 +72,12 @@ def match_patterns(num):
         default=                                # But set a default of -1 if the list comprehension is empty *
         (-1, None)                              # (*: this is in a tuple so it works with the next line)
         )[0]                                    # Finally return the index of our minimum pattern (or -1)
-
+    # In condensed form:
+    # return min([(i, v) for i, v in enumerate(PATTERNS) if compare_bits(v, num) <= 7],
+    #            key=lambda x: compare_bits(x[1], num), default=(-1, None))[0]
 
 def compare_bits(bits_a, bits_b):
-    # XOR A and B together, then count the number of ones in the resulting binary number to get the differences         (Note: bit_count() is python 3.10+ only)
+    # XOR A and B together, then count the number of ones in the resulting binary number to get the differences
     return (bits_a ^ bits_b).bit_count()
 
 
