@@ -241,7 +241,5 @@ def main():
     print(test_is.elements)
     print(f"{test_is.bin:b}")
 
-    pass
-
 if __name__ == "__main__":
     main()
