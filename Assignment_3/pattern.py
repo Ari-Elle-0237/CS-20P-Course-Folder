@@ -65,13 +65,13 @@ def match_patterns(num):
     :param num: The number to be compared against PATTERNS
     :return: -1 or an int between 0 and 7 (inclusive)
     """
-    return min([                               # The closest match can be found by finding the minimum:
-        (i, v) for i, v in enumerate(PATTERNS) # First make a list comprehension of our patterns and their indices
-        if compare_bits(v, num) <= 7],         # But only include the patterns that aren't too different
-        key=lambda x: compare_bits(x[1], num), # Then calculate the minimum based on v's differences to num
-        default=                               # But set a default of -1 if the list comprehension is empty *
-        (-1, None)                             # (*: this is in a tuple so it works with the next line)
-        )[0]                                   # Finally return the index of our minimum pattern (or -1)
+    return min(                                 # The closest match can be found by taking the minimum of our patterns:
+        [(i, v) for i, v in enumerate(PATTERNS) # First make a list comprehension of our patterns and their indices
+        if compare_bits(v, num) <= 7],          # But only include the patterns that aren't too different
+        key=lambda x: compare_bits(x[1], num),  # Then calculate the minimum based on v's differences to num
+        default=                                # But set a default of -1 if the list comprehension is empty *
+        (-1, None)                              # (*: this is in a tuple so it works with the next line)
+        )[0]                                    # Finally return the index of our minimum pattern (or -1)
 
 
 def compare_bits(bits_a, bits_b):
