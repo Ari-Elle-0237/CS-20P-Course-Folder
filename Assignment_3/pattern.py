@@ -62,25 +62,16 @@ def match_patterns(num):
     """
     Takes a given number and compares it to all the patterns in PATTERNS, returning the index of the closest
     matching pattern or -1 if none match.
-    :param num:
-    :return:
+    :param num: The number to be compared against PATTERNS
+    :return: -1 or an int between 0 and 7 (inclusive)
     """
-    matches = []
-    for i, pattern in enumerate(PATTERNS):
-        # Analyze the differences
-        bit_count = compare_bits(num, pattern)
-        # Set to -1 if differences are too great
-        if bit_count > 7:
-            bit_count = -1
-        # Save the result
-        matches.append((i, bit_count))
-    # Sort our results by their bit_count to find the closest match
-    matches.sort(key=lambda x: x[1], reverse=True)  #                                                                   (source: https://stackoverflow.com/questions/20183069/how-to-sort-multidimensional-array-by-column)
-    # If no matches are found return -1
-    if matches[0][1] == -1:
-        return -1
-    # Otherwise return the index associated with the best match
-    return matches[0][0]
+    return min([                               # The closest match can be found by finding the minimum:
+        (i, v) for i, v in enumerate(PATTERNS) # First make a list comprehension of our patterns and their indices
+        if compare_bits(v, num) <= 7],         # But only include the patterns that aren't too different
+        key=lambda x: compare_bits(x[1], num), # Then calculate the minimum based on v's differences to num
+        default=                               # But set a default of -1 if the list comprehension is empty *
+        (-1, None)                             # (*: this is in a tuple so it works with the next line)
+        )[0]                                   # Finally return the index of our minimum pattern (or -1)
 
 
 def compare_bits(bits_a, bits_b):
