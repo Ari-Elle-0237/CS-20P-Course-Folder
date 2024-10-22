@@ -48,17 +48,41 @@ PATTERNS = [int(i, base=2) for i in """
 """.strip().split("\n")]
 
 
-def main():
-    for line in sys.stdin:
+def main(input_data=sys.stdin):
+    """
+    main() is given an argument here in order to improve testability with unittest, (this seemed considerably simpler
+    than figuring out however unittest.mock works) I saw mixed answers as to whether this is acceptable practice so I
+    have included an alternate way to structure this in the editor fold below
+    """
+    for line in input_data:
         try:
             line = int(line, base=2)
             if match_patterns(line) == -1:
                 print("error")
             else:
                 print(match_patterns(line))
-        except ValueError:
+        except ValueError or TypeError:
             print("error: invalid input")
 
+# <editor-fold: Alternate Phrasing>
+# def main():
+#     run(sys.stdin)
+#
+# def run(input_data):
+#     # This function is essentially main() for this program but with an input argument for improved testability
+#     for line in input_data:
+#         try:
+#             line = int(line, base=2)
+#             if match_patterns(line) == -1:
+#                 print("error")
+#             else:
+#                 print(match_patterns(line))
+#         except ValueError:
+#             print("error: invalid input")
+# </editor-fold>
+
+def function():
+    return int(input("prompt> "))
 
 def match_patterns(num: int):
     """
