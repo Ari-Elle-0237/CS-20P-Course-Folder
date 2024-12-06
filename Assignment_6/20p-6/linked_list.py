@@ -37,26 +37,47 @@ class linked_list: # PEP8 violation req'd by assignment spec
             self.insert(i)
 
     def insert(self, item: str):
+        self.insert_at_index(item, 0)
+
+    def append(self, item):
+        self.insert_at_index(item, self.length)
+
+    def insert_at_index(self, item: str, index: int):
+        # Sanitize Inputs
         if not isinstance(item, str):
             raise TypeError("Tried to insert non-string into linked_list")
         if len(item) == 0:
             return
-        for i in reversed(item):
-            node = self.Node(i)
-            node.link = self.first
-            self.first = node
-            self.length += 1
 
-    # def insert_at_index(self, item, index):
-    #     if not isinstance(item, str):
-    #         raise TypeError("Tried to insert non-string into linked_list")
-    #     if len(item) == 0:
-    #         return
-    #     for i in reversed(item):
-    #         node = self.Node(i)
-    #         node.link = self.first
-    #         self.first = node
-    #         self.length += 1
+        # Assemble the item(s) to be inserted into a chain
+        chain_to_insert = []
+        for i in item:
+            node = self.Node(i)
+            if chain_to_insert:
+                chain_to_insert[-1].link = node
+            chain_to_insert.append(node)
+
+        # Get the previous and next items in the list (if they exist) and save them
+        if index - 1 >= 0:
+            prev = self[index - 1]
+        if index < len(self):
+            nxt = self[index]
+        elif index == self.length:
+            nxt = None
+        else:
+            raise IndexError("Index out of range")
+
+        # Then update the links (if possible)
+        try:
+            prev.link = chain_to_insert[0]
+        except UnboundLocalError:
+            # If we're at the beginning of the list, prev won't exist, so instead we update self.first
+            self.first = chain_to_insert[0]
+        # Try/Except is not necessary for nxt since we can just assign None to it.
+        chain_to_insert[-1].link = nxt
+
+        # Lastly, update length
+        self.length += len(chain_to_insert)
 
 
 
@@ -64,8 +85,6 @@ class linked_list: # PEP8 violation req'd by assignment spec
 
     def splice(self, find, replace):
         if len(find) == 0:
-            return
-        if len(replace) > 1:
             return
         for i in self:
             if i.data == find:
@@ -94,9 +113,11 @@ class linked_list: # PEP8 violation req'd by assignment spec
 def main():
     # test = linked_list("")
     # print(test)
-    test = linked_list("123456")
+    test = linked_list("2345")
+    test.insert("1")
+    test.append("6")
     print(test)
-    test.insert_at_index("ABC", 2)
+    test.insert_at_index("ABC", 6)
     # print(test[2].data)
     print(test)
 
