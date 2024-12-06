@@ -1,7 +1,7 @@
 """
 Assignment #4: Integer Sets
 linked_list.py
-by Ariel Zepezauer (arielzepezauer@gmail.com
+by Ariel Zepezauer (arielzepezauer@gmail.com)
 Pengo: 'azepezau'
 Test Cases in unittest_linked_list.py
 Repository at: https://github.com/Ari-Elle-0237/CS-20P-Course-Folder.git
@@ -37,32 +37,48 @@ class linked_list: # PEP8 violation req'd by assignment spec
             self.insert(i)
 
     def insert(self, item: str):
-        self.insert_at_index(item, 0)
-
-    def insert_at_index(self, item, index):
         if not isinstance(item, str):
             raise TypeError("Tried to insert non-string into linked_list")
         if len(item) == 0:
             return
         for i in reversed(item):
             node = self.Node(i)
-            node.link = self[index]
+            node.link = self.first
             self.first = node
             self.length += 1
+
+    # def insert_at_index(self, item, index):
+    #     if not isinstance(item, str):
+    #         raise TypeError("Tried to insert non-string into linked_list")
+    #     if len(item) == 0:
+    #         return
+    #     for i in reversed(item):
+    #         node = self.Node(i)
+    #         node.link = self.first
+    #         self.first = node
+    #         self.length += 1
+
+
+
+
 
     def splice(self, find, replace):
         if len(find) == 0:
             return
+        if len(replace) > 1:
+            return
+        for i in self:
+            if i.data == find:
+                i.data = replace
 
-
-        pass
 
     def __getitem__(self, item: int):
+        # idk if this is the right way to make this iterable but it seems to work
         current = self.first
         if item > self.length:
             raise IndexError("Index out of range")
         for _ in range(item):
-            if not current.link:
+            if current.link is None:
                 raise StopIteration
             current = current.link
         return current
@@ -76,11 +92,13 @@ class linked_list: # PEP8 violation req'd by assignment spec
         return f"({self.length})" + "".join([f"{i.data}" for i in self])
 
 def main():
-    test = linked_list("")
-    print(test)
+    # test = linked_list("")
+    # print(test)
     test = linked_list("123456")
     print(test)
-
+    test.insert_at_index("ABC", 2)
+    # print(test[2].data)
+    print(test)
 
 if __name__ == "__main__":
     main()
