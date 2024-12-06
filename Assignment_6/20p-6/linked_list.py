@@ -37,17 +37,24 @@ class linked_list: # PEP8 violation req'd by assignment spec
             self.insert(i)
 
     def insert(self, item: str):
+        self.insert_at_index(item, 0)
+
+    def insert_at_index(self, item, index):
         if not isinstance(item, str):
             raise TypeError("Tried to insert non-string into linked_list")
         if len(item) == 0:
             return
         for i in reversed(item):
             node = self.Node(i)
-            node.link = self.first
+            node.link = self[index]
             self.first = node
             self.length += 1
 
     def splice(self, find, replace):
+        if len(find) == 0:
+            return
+
+
         pass
 
     def __getitem__(self, item: int):
@@ -70,7 +77,8 @@ class linked_list: # PEP8 violation req'd by assignment spec
 
 def main():
     test = linked_list("")
-    # print(test)
+    print(test)
+    test = linked_list("123456")
     print(test)
 
 
