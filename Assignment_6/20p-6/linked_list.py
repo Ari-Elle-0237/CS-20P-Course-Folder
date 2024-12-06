@@ -37,12 +37,21 @@ class linked_list: # PEP8 violation req'd by assignment spec
             self.insert(i)
 
     def insert(self, item: str):
+        """"Inserts item(s) at the beginning of the list using insert_at_index()"""
         self.insert_at_index(item, 0)
 
     def append(self, item):
+        """"Inserts item(s) at the end of the list using insert_at_index()"""
         self.insert_at_index(item, self.length)
 
     def insert_at_index(self, item: str, index: int):
+        """"
+        Inserts item(s) at a particular index
+        Acts as infrastructure for splice(), insert(), and append(), and additionally handles input sanitization
+        :param index: integer between 0 and self.length (inclusive)
+        :param item: string input to be converted into linked list nodes
+        :return: None
+        """
         # Sanitize Inputs
         if not isinstance(item, str):
             raise TypeError("Tried to insert non-string into linked_list")
@@ -80,6 +89,7 @@ class linked_list: # PEP8 violation req'd by assignment spec
         self.length += len(chain_to_insert)
 
 
+    def remove_at_index(self, index, span):
 
 
 
