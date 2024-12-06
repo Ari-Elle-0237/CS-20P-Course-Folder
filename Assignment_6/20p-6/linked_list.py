@@ -43,13 +43,13 @@ class linked_list: # PEP8 violation req'd by assignment spec
 
     def insert(self, item: str):
         """"Inserts item(s) at the beginning of the list using insert_at_index()"""
-        self.insert_at_index(item, 0)
+        self.insert_at_index(0, item)
 
     def append(self, item):
         """"Inserts item(s) at the end of the list using insert_at_index()"""
-        self.insert_at_index(item, self.length)
+        self.insert_at_index(self.length, item)
 
-    def insert_at_index(self, item: str, index: int):
+    def insert_at_index(self, index: int, item: str):
         """"
         Inserts item(s) at a particular index
         Acts as infrastructure for splice(), insert(), and append(), and additionally handles input sanitization
@@ -101,10 +101,12 @@ class linked_list: # PEP8 violation req'd by assignment spec
         :param count: number of nodes to be deleted
         :return: None
         """
-        if index + count + 1 < self.length:
-            self[index].link = self[index + count + 1]
-        elif index + count + 1 == self.length:
-            self[index].link = None
+        if index == 0:
+            self.first = self[index + count]
+        elif index + count < self.length:
+            self[index - 1].link = self[index + count]
+        elif index + count == self.length:
+            self[index - 1].link = None
         else:
             raise IndexError("Index out of range")
         self.length -= count
@@ -113,11 +115,10 @@ class linked_list: # PEP8 violation req'd by assignment spec
         # Sanitize Inputs
         if len(find) == 0:
             return
+        match = re.search(find, str(self)[3:])
+        self.remove_at_index(match.start(0), len(find))
+        self.insert_at_index(match.start(0), replace)
 
-
-        for i in self:
-            if i.data == find:
-                i.data = replace
 
 
     def __getitem__(self, item: int):
@@ -146,10 +147,12 @@ def main():
     test.insert("1")
     test.append("6")
     # print(test[-1].data)
-    test.insert_at_index("ABC", 6)
+    test.insert_at_index(6, "ABC")
     # print(test[2].data)
     print(test)
-    test.remove_at_index(0, 3)
+    # test.remove_at_index(6, 3)
+    # print(test)
+    test.splice("ABC", "XYZ")
     print(test)
 
 if __name__ == "__main__":
