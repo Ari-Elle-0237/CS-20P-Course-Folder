@@ -64,6 +64,8 @@ class linked_list: # PEP8 violation req'd by assignment spec
         return self.length
 
     def __str__(self):
+        if len(self) == 0:
+            return "(0)"
         return f"({self.length})" + "".join([f"{i.data}" for i in self])
 
 def main():
