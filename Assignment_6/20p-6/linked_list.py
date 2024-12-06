@@ -89,7 +89,26 @@ class linked_list: # PEP8 violation req'd by assignment spec
         self.length += len(chain_to_insert)
 
 
-    def remove_at_index(self, index, span):
+    # def remove_at_index(self, index, span):
+    #     # Get the previous and next items in the list (if they exist) and save them
+    #     if index - 1 >= 0:
+    #         prev = self[index - 1]
+    #     if index + span <= len(self):
+    #         nxt = self[index + span]
+    #     else:
+    #         nxt = self[-1]
+    #
+    #     # Then update the links (if possible)
+    #     try:
+    #         prev.link = chain_to_insert[0]
+    #     except UnboundLocalError:
+    #         # If we're at the beginning of the list, prev won't exist, so instead we update self.first
+    #         self.first = chain_to_insert[0]
+    #     # Try/Except is not necessary for nxt since we can just assign None to it.
+    #     chain_to_insert[-1].link = nxt
+    #
+    #     # Lastly, update length
+    #     self.length += len(chain_to_insert)
 
 
 
@@ -104,7 +123,7 @@ class linked_list: # PEP8 violation req'd by assignment spec
     def __getitem__(self, item: int):
         # idk if this is the right way to make this iterable but it seems to work
         current = self.first
-        if item > self.length:
+        if item > self.length or item < 0: # TODO: Add support for negative indexing
             raise IndexError("Index out of range")
         for _ in range(item):
             if current.link is None:
@@ -126,7 +145,7 @@ def main():
     test = linked_list("2345")
     test.insert("1")
     test.append("6")
-    print(test)
+    print(test[-1].data)
     test.insert_at_index("ABC", 6)
     # print(test[2].data)
     print(test)
